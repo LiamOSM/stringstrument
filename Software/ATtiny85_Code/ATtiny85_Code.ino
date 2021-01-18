@@ -1,18 +1,19 @@
 // A receive-only version of the SoftwareSerial library
 #include <SoftwareSerialIn.h>
+#include <EEPROM.h>
 
-uint8_t data_pin  = 0;  // Pin 0 - Data
-uint8_t clock_pin = 1;  // Pin 1 - Clock
-uint8_t SR_pin    = 2;  // Pin 2 - Shift Register Signal
-uint8_t gate_pin  = 3;  // Pin 3 - MOSFET Gate
-uint8_t btn_pin   = 4;  // Pin 4 - Button
-int my_address = 97;     // This device's address
+const uint8_t data_pin  = 0;  // Pin 0 - Data
+const uint8_t clock_pin = 1;  // Pin 1 - Clock
+const uint8_t SR_pin    = 2;  // Pin 2 - Shift Register Signal
+const uint8_t gate_pin  = 3;  // Pin 3 - MOSFET Gate
+const uint8_t btn_pin   = 4;  // Pin 4 - Button
+const int my_address = 97;    // This device's address
 
 SoftwareSerialIn mySerial(0); // receive on pin 0
 int address_byte = 0;
 int data_byte = 0;
 
-int freq = 400;
+int freq;
 
 void setup() {
   pinMode(data_pin, INPUT);
@@ -20,6 +21,7 @@ void setup() {
   pinMode(SR_pin, INPUT_PULLUP);
   pinMode(btn_pin, INPUT);
   pinMode(gate_pin, OUTPUT);
+  EEPROM.get(0, freq);
   mySerial.begin(9600);
 }
 
@@ -52,6 +54,7 @@ void loop() {
           freq += 100;
           break;
       }
+      EEPROM.put(0, freq);
     }
     else {
       // do nothing, not this device's address
