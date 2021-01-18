@@ -6,18 +6,18 @@ uint8_t clock_pin = 1;  // Pin 1 - Clock
 uint8_t SR_pin    = 2;  // Pin 2 - Shift Register Signal
 uint8_t gate_pin  = 3;  // Pin 3 - MOSFET Gate
 uint8_t btn_pin   = 4;  // Pin 4 - Button
-int my_address = 1;     // This device's address
+int my_address = 97;     // This device's address
 
 SoftwareSerialIn mySerial(0); // receive on pin 0
 int address_byte = 0;
 int data_byte = 0;
 
-int freq = 0;
+int freq = 400;
 
 void setup() {
   pinMode(data_pin, INPUT);
   pinMode(clock_pin, INPUT);
-  pinMode(SR_pin, INPUT);
+  pinMode(SR_pin, INPUT_PULLUP);
   pinMode(btn_pin, INPUT);
   pinMode(gate_pin, OUTPUT);
   mySerial.begin(9600);
@@ -63,7 +63,8 @@ void loop() {
   }
 
   // Button pressed or enable from shift register
-  while ((digitalRead(btn_pin) == LOW) || (digitalRead(SR_pin) == LOW)) {
+  //  while ((digitalRead(btn_pin) == LOW) || (digitalRead(SR_pin) == LOW)) {
+  while ((digitalRead(btn_pin) == LOW)) {
     tone(gate_pin, freq);
   }
   noTone(gate_pin);
@@ -71,6 +72,9 @@ void loop() {
 
 void flush_serial() {
   // purge everything from the serial buffer
+  tone(gate_pin, 1000); // beep to tell me what's happening (debugging)
   while (mySerial.available())
     mySerial.read();
+  delay(500);
+  noTone(gate_pin);
 }
