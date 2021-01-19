@@ -2,16 +2,16 @@
 #include <SoftwareSerialIn.h>
 #include <EEPROM.h>
 
-const uint8_t data_pin  = 0;  // Pin 0 - Data
-const uint8_t clock_pin = 1;  // Pin 1 - Clock
-const uint8_t SR_pin    = 2;  // Pin 2 - Shift Register Signal
-const uint8_t gate_pin  = 3;  // Pin 3 - MOSFET Gate
-const uint8_t btn_pin   = 4;  // Pin 4 - Button
-const int my_address = 97;    // This device's address
+const uint8_t data_pin   = 0;  // Pin 0 - Data
+const uint8_t clock_pin  = 1;  // Pin 1 - Clock
+const uint8_t SR_pin     = 2;  // Pin 2 - Shift Register Signal
+const uint8_t gate_pin   = 3;  // Pin 3 - MOSFET Gate
+const uint8_t btn_pin    = 4;  // Pin 4 - Button
+const uint8_t my_address = 'l'; // This device's address
 
 SoftwareSerialIn mySerial(0); // receive on pin 0
-int address_byte = 0;
-int data_byte = 0;
+uint8_t address_byte = 0;
+uint8_t data_byte = 0;
 
 int freq;
 
@@ -26,7 +26,7 @@ void setup() {
 }
 
 void loop() {
-  if (mySerial.available() == 2) { // two bytes available in the buffer
+  if ((mySerial.available() > 1) && !(mySerial.available() % 2)) { // data available and multiple of two bytes in the buffer
     address_byte = mySerial.read();
     data_byte = mySerial.read();
 
@@ -60,10 +60,6 @@ void loop() {
       // do nothing, not this device's address
     }
   }
-  else if (mySerial.available() > 2) {
-    // something has gone horribly wrong!
-    flush_serial();
-  }
 
   // Button pressed or enable from shift register
   //  while ((digitalRead(btn_pin) == LOW) || (digitalRead(SR_pin) == LOW)) {
@@ -75,9 +71,6 @@ void loop() {
 
 void flush_serial() {
   // purge everything from the serial buffer
-  tone(gate_pin, 1000); // beep to tell me what's happening (debugging)
   while (mySerial.available())
     mySerial.read();
-  delay(500);
-  noTone(gate_pin);
 }

@@ -1,3 +1,5 @@
+// this only sometimes works, for unknown reasons
+// just connect the RX pin directly instead (pin 0)
 #include <SoftwareSerial.h>
 
 SoftwareSerial softSerial(2, 3); // RX pin 2, TX pin 3
