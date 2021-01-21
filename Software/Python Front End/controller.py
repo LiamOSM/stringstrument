@@ -11,7 +11,7 @@ ser = serial.Serial(
 # address must be a string of length 1
 def set_pitch(address, pitch):
     address = ord(address)
-    data = [address, 0]
+    data = [address, ord('0')]
     ser.write(bytes(data))
     print(bytes(data))
     hundreds = int(pitch/100)
@@ -19,14 +19,14 @@ def set_pitch(address, pitch):
     tens = int(pitch/10)
     ones = pitch - 10 * tens
     for i in range(hundreds):
-        data = [address, 6]
+        data = [address, ord('6')]
         ser.write(bytes(data))
         print(bytes(data))
     for i in range(tens):
-        data = [address, 5]
+        data = [address, ord('5')]
         ser.write(bytes(data))
         print(bytes(data))
     for i in range(ones):
-        data = [address, 4]
+        data = [address, ord('4')]
         ser.write(bytes(data))
         print(bytes(data))
