@@ -1,24 +1,17 @@
-// this only sometimes works, for unknown reasons
-// just connect the RX pin directly instead (pin 0)
-#include <SoftwareSerial.h>
-
-SoftwareSerial softSerial(2, 3); // RX pin 2, TX pin 3
+// All this does is blink the on-board LED when a byte is received
+// Connect pin 0 (RX) to the data pin on the PCB
 
 void setup() {
   pinMode(13, OUTPUT);
   Serial.begin(9600);
-  softSerial.begin(9600);
-  delay(1000);
-  Serial.println("Ready for commands");
 }
 
 void loop() {
   if (Serial.available()) {
-    byte receivedByte = 0;
-    receivedByte = Serial.read();
-    softSerial.write(receivedByte);
-    Serial.print("  Sent ");
-    Serial.print(receivedByte);
-    Serial.println();
+    Serial.read();
+    digitalWrite(13, HIGH);
+    delay(200);
+    digitalWrite(13, LOW);
+    delay(200);
   }
 }
