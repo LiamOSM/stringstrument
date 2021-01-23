@@ -19,7 +19,7 @@ def set_pitch(address, pitch):
     hundreds = int(pitch/100)
     pitch = pitch - 100 * hundreds
     tens = int(pitch/10)
-    ones = pitch - 10 * tens
+    ones = int(pitch - 10 * tens)
     for i in range(hundreds):
         data = [address, ord('6')]
         ser.write(bytes(data))
@@ -32,4 +32,16 @@ def set_pitch(address, pitch):
         data = [address, ord('4')]
         ser.write(bytes(data))
         #print(bytes(data))
+    print("Done")
+
+def turn_on(address):
+    address = ord(address)
+    data = [address, ord('9')]
+    ser.write(bytes(data))
+    print("Done")
+
+def turn_off(address):
+    address = ord(address)
+    data = [address, ord(':')]
+    ser.write(bytes(data))
     print("Done")
