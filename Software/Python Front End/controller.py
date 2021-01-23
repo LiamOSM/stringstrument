@@ -35,13 +35,11 @@ def set_pitch(address, pitch):
     print("Done")
 
 def turn_on(address):
-    address = ord(address)
-    data = [address, ord('9')]
+    data = [ord(address), ord('9')]
     ser.write(bytes(data))
     print("Done")
 
 def turn_off(address):
-    address = ord(address)
-    data = [address, ord(':')]
+    data = [ord(address), ord(':')]
     ser.write(bytes(data))
     print("Done")
