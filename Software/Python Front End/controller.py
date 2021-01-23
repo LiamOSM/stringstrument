@@ -6,7 +6,7 @@ pitches = [175,185,196,208,220,233,247,262,277,294,311,330]
 # serial setup
 ser = serial.Serial(
 	port = '/dev/cu.usbmodem14101',
-	baudrate = 9600,
+	baudrate = 2400,
 )
 
 # set the pitch of a particular note

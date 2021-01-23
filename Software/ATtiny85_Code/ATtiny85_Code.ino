@@ -12,6 +12,8 @@ const uint8_t my_address = 'l'; // This device's address
 SoftwareSerialIn mySerial(0); // receive on pin 0
 uint8_t address_byte = 0;
 uint8_t data_byte = 0;
+uint8_t freq_cal = 0; // OSCCAL adjustment
+uint8_t note_on = 0; // software note enable
 
 int freq;
 
@@ -22,7 +24,9 @@ void setup() {
   pinMode(btn_pin, INPUT);
   pinMode(gate_pin, OUTPUT);
   EEPROM.get(0, freq);
-  mySerial.begin(9600);
+  //EEPROM.get(2, freq_cal);
+  //OSCCAL = freq_cal;
+  mySerial.begin(2400);
 }
 
 void loop() {
@@ -53,7 +57,21 @@ void loop() {
         case 54: // '6' - increase frequency by 100
           freq += 100;
           break;
+        case 55: // '7' - increase freq_cal by 1
+          freq_cal++;
+          break;
+        case 56: // '8' - decrease freq_cal by 1
+          freq_cal--;
+          break;
+        case 57: // '9' - turn note on
+          note_on = 1;
+          break;
+        case 58: // ':' - turn note off
+          note_on = 0;
+          break;
       }
+      //OSCCAL = freq_cal;
+      //EEPROM.put(2, freq_cal);
       EEPROM.put(0, freq);
     }
     else {
@@ -63,10 +81,15 @@ void loop() {
 
   // Button pressed or enable from shift register
   //  while ((digitalRead(btn_pin) == LOW) || (digitalRead(SR_pin) == LOW)) {
-  while ((digitalRead(btn_pin) == LOW)) {
+  if ((digitalRead(btn_pin) == LOW) || note_on) {
     tone(gate_pin, freq);
   }
-  noTone(gate_pin);
+  if ((!note_on) && (digitalRead(btn_pin) == HIGH)) {
+    noTone(gate_pin);
+  }
+  if (note_on && (digitalRead(btn_pin) == LOW)) {
+    note_on = 0;
+  }
 }
 
 void flush_serial() {
