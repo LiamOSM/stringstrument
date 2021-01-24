@@ -1,7 +1,7 @@
 from time import sleep
 import serial
 
-pitches = [175,185,196,208,220,233,247,262,277,294,311,330]
+pitches = [174,183,197,209,218,229,241,268,279,296,316,325]
 
 # serial setup
 ser = serial.Serial(
