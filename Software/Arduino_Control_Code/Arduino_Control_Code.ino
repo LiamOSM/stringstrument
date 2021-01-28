@@ -1,4 +1,7 @@
-// All this does is blink the on-board LED when a byte is received
+// All this does is blink the on-board LED when a byte is received.
+// A blank sketch could also be used, or you could omit the 
+// Arduino altogether and just use a USB-TTL cable thingy.
+
 // Connect pin 0 (RX) to the data pin on the PCB
 
 void setup() {
