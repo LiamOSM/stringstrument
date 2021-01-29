@@ -2,6 +2,7 @@ from time import sleep
 import serial
 
 pitches = [174,183,197,209,218,229,241,268,279,296,316,325]
+notes   = ['a','b','c','d','e','f','g','h','i','j','k','l']
 
 # serial setup
 ser = serial.Serial(
@@ -43,3 +44,6 @@ def turn_off(address):
     data = [ord(address), ord(':')]
     ser.write(bytes(data))
     print("Done")
+
+for i in range(12):
+    set_pitch(notes[i],pitches[i])

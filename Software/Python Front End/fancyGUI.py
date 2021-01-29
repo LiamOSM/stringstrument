@@ -1,20 +1,11 @@
 from time import sleep
-
-
-
-
-
-
-##### stuff I added for gui #####
+import keyboard
+import serial
+from tkinter import *
 
 ### WINDOW SCALE FACTOR ###
 ### CHANGE THIS IF YOU HAVE A REALLY HIGH RESOLUTION DISPLAY THAT MAKES THE UI WINDOW TINY ###
 wsf = 1.0
-
-
-import keyboard
-from tkinter import *
-
 mode = "play"
 lock = "off"
 hold = "off"
@@ -25,30 +16,17 @@ tuneSelect = "a"
 
 #################################
 
-
-
-
-
-
-
-'''
-import serial
-'''
-
 pitches = [174,183,197,209,218,229,241,268,279,296,316,325]
 
 # serial setup
-'''
 ser = serial.Serial(
 	port = '/dev/cu.usbmodem14101',
 	baudrate = 2400,
 )
-'''
 
 # set the pitch of a particular note
 # address must be a string of length 1
 def set_pitch(address, pitch):
-    '''
     address = ord(address)
     data = [address, ord('0')]
     ser.write(bytes(data))
@@ -69,30 +47,19 @@ def set_pitch(address, pitch):
         data = [address, ord('4')]
         ser.write(bytes(data))
         #print(bytes(data))
-    '''
     print("Set %s to %s" % (address, pitch))
 
 def turn_on(address):
-    '''
     data = [ord(address), ord('9')]
     ser.write(bytes(data))
-    '''
+    #print(bytes(data))
     print("%s on" % address)
 
 def turn_off(address):
-    '''
     data = [ord(address), ord(':')]
     ser.write(bytes(data))
-    '''
+    #print(bytes(data))
     print("%s off" % address)
-
-
-
-
-
-
-
-
 
 #######################
 ### TKINTER GARBAGE ###
@@ -107,8 +74,8 @@ class noteKey:
         self.keylabel = keylabel
         self.state = 'off'
         self.keyboardState = 'off'
-        self.pitch = -99
-        self.savedPitch = -99
+        self.pitch = 0
+        self.savedPitch = 0
 
     def mouseDown(self, event=None):
         if mode == 'play':
