@@ -1,0 +1,25 @@
+ASCII	Dec	Function
+
+a	97	Address
+b	98	Address
+c	99	Address
+d	100	Address
+e	101	Address
+f	102	Address
+g	103	Address
+h	104	Address
+i	105	Address
+j	106	Address
+k	107	Address
+l	108	Address
+0	48	set freq = 0
+1	49	freq -= 100
+2	50	freq -= 10
+3	51	freq -= 1
+4	52	freq += 1
+5	53	freq += 10
+6	54	freq += 100
+7	55	OSCCAL++
+8	56	OSCCAL--
+9	57	note_on = true
+:	58	note_on = false
