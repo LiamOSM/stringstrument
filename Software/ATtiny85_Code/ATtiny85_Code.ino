@@ -2,7 +2,7 @@
 #include <SoftwareSerialIn.h>
 #include <EEPROM.h>
 
-const uint8_t data_pin   = 0;  // Pin 0 - Data
+const uint8_t data_pin   = 0;  // Pin 0 (HW pin 5) - Data
 const uint8_t clock_pin  = 1;  // Pin 1 - Clock
 const uint8_t SR_pin     = 2;  // Pin 2 - Shift Register Signal
 const uint8_t gate_pin   = 3;  // Pin 3 - MOSFET Gate
